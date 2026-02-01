@@ -7,13 +7,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const navLinks = [
-  { label: "HOME", href: "#home" },
-  { label: "ABOUT", href: "#about" },
-  { label: "FEATURES", href: "#features" },
+  { label: "HOME", href: "/" },
+  { label: "ABOUT", href: "/about" },
+  { label: "FEATURES", href: "/#features" },
   { label: "COMMUNITY", href: "#community" },
 ];
 
@@ -50,6 +51,7 @@ const socialLinks = [
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,21 +61,47 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    if (href === "#home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      toast.info("Feature coming soon");
-    }
+  const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
+    
+    // Handle hash links on the same page
+    if (href.startsWith("#")) {
+      if (href === "#community") {
+        toast.info("Feature coming soon");
+        return;
+      }
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    // Handle hash links from other pages (e.g., /#features)
+    else if (href.includes("#") && !href.startsWith("/about")) {
+      const [path, hash] = href.split("#");
+      if (location === path || (location === "/" && path === "/")) {
+        const element = document.querySelector(`#${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
   };
 
   const handleSignUp = () => {
-    const conversionSection = document.getElementById("conversion");
-    if (conversionSection) {
-      conversionSection.scrollIntoView({ behavior: "smooth" });
+    if (location === "/") {
+      const conversionSection = document.getElementById("conversion");
+      if (conversionSection) {
+        conversionSection.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      window.location.href = "/#conversion";
     }
+  };
+
+  const isActive = (href: string) => {
+    if (href === "/") return location === "/";
+    if (href.startsWith("/#")) return location === "/";
+    return location === href || location.startsWith(href);
   };
 
   return (
@@ -90,7 +118,7 @@ export default function Navigation() {
       <div className="container mx-auto">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="#home" onClick={(e) => handleNavClick(e, "#home")} className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group">
             <img 
               src="/images/phoenix-logo.png" 
               alt="MUSIQ MATRIX" 
@@ -99,20 +127,43 @@ export default function Navigation() {
             <span className="font-display font-bold text-lg md:text-xl tracking-wider text-gradient-gold">
               MUSIQ<br className="hidden" />MATRIX
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="font-display text-sm tracking-widest text-white/70 hover:text-[#FFB800] transition-colors duration-300 relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FFB800] transition-all duration-300 group-hover:w-full" />
-              </a>
+              link.href.startsWith("#") || link.href.includes("#") ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
+                  className={`font-display text-sm tracking-widest transition-colors duration-300 relative group ${
+                    isActive(link.href) ? "text-[#FFB800]" : "text-white/70 hover:text-[#FFB800]"
+                  }`}
+                >
+                  {link.label}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#FFB800] transition-all duration-300 ${
+                    isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                  }`} />
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`font-display text-sm tracking-widest transition-colors duration-300 relative group ${
+                    isActive(link.href) ? "text-[#FFB800]" : "text-white/70 hover:text-[#FFB800]"
+                  }`}
+                >
+                  {link.label}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#FFB800] transition-all duration-300 ${
+                    isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                  }`} />
+                </Link>
+              )
             ))}
           </div>
 
@@ -167,14 +218,32 @@ export default function Navigation() {
         >
           <div className="py-4 space-y-4 border-t border-white/10">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="block font-display text-sm tracking-widest text-white/70 hover:text-[#FFB800] transition-colors"
-              >
-                {link.label}
-              </a>
+              link.href.startsWith("#") || (link.href.includes("#") && !link.href.startsWith("/about")) ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
+                  className={`block font-display text-sm tracking-widest transition-colors ${
+                    isActive(link.href) ? "text-[#FFB800]" : "text-white/70 hover:text-[#FFB800]"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block font-display text-sm tracking-widest transition-colors ${
+                    isActive(link.href) ? "text-[#FFB800]" : "text-white/70 hover:text-[#FFB800]"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <div className="flex items-center gap-4 pt-4 border-t border-white/10">
               {socialLinks.map((social) => (
