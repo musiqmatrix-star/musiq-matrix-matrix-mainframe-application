@@ -1,25 +1,39 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
-
 /**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
+ * Home Page - MUSIQ MATRIX
+ * Design: Cyberpunk Noir
+ * Sections: Navigation, Hero, Value, Features, Conversion, Footer
  */
-export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
 
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import ValueSection from "@/components/ValueSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import ConversionSection from "@/components/ConversionSection";
+import Footer from "@/components/Footer";
+
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
+      {/* Global Navigation */}
+      <Navigation />
+
+      {/* Main Content */}
       <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
+        {/* Hero Section - Identity Layer */}
+        <HeroSection />
+
+        {/* Value Reinforcement - Trust Layer */}
+        <ValueSection />
+
+        {/* Feature Grid - Understanding Layer */}
+        <FeaturesSection />
+
+        {/* Conversion Section - Invitation Layer */}
+        <ConversionSection />
       </main>
+
+      {/* Footer - Closure Layer */}
+      <Footer />
     </div>
   );
 }
