@@ -1,11 +1,11 @@
 "use client";
 
-import Navigation from "../client/src/components/Navigation";
-import HeroSection from "../client/src/components/HeroSection";
-import ValueSection from "../client/src/components/ValueSection";
-import FeaturesSection from "../client/src/components/FeaturesSection";
-import ConversionSection from "../client/src/components/ConversionSection";
-import Footer from "../client/src/components/Footer";
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import ValueSection from "@/components/ValueSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import ConversionSection from "@/components/ConversionSection";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (

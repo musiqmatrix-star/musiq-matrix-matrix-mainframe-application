@@ -1,6 +1,6 @@
 import { Inter, Syncopate, Rajdhani } from "next/font/google";
-import "../client/src/index.css"; 
-import { ThemeProvider } from "../client/src/contexts/ThemeContext";
+import "./globals.css"; 
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 // Technical body font
 const sans = Inter({
@@ -21,6 +21,11 @@ const mono = Rajdhani({
   subsets: ["latin"],
   variable: "--font-mono",
 });
+
+export const metadata = {
+  title: "MUSIQ MATRIX - The Algorithm is a Script",
+  description: "Experience Frequency in Motion. Join the MUSIQ MATRIX Revolution.",
+};
 
 export default function RootLayout({
   children,
