@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const navLinks = [
-  { label: "HOME", href: "/" },
-  { label: "ABOUT", href: "/about" },
-  { label: "FEATURES", href: "/#features" },
-  { label: "COMMUNITY", href: "#community" },
+  { label: "MUSIC CATALOG", href: "#music-catalog" },
+  { label: "VISUAL MEDIA", href: "#visual-media" },
+  { label: "MATRX MERCH", href: "/matrx-merch", highlight: true },
+  { label: "MAINFRAME OS", href: "#mainframe" },
+  { label: "GENESIS", href: "#genesis" },
+  { label: "ELEMENTAL PROTOCOL", href: "#elemental-protocol" },
+  { label: "LOGIN", href: "#login" },
 ];
 
 export default function Navigation() {
@@ -47,13 +50,14 @@ export default function Navigation() {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className={`font-mono text-xs tracking-[0.2em] transition-colors hover:text-[#FFB800] ${
-                pathname === link.href ? "text-[#FFB800]" : "text-white/70"
+              className={`font-mono text-xs tracking-[0.15em] transition-colors hover:text-[#FFB800] ${
+                pathname === link.href ? "text-[#FFB800]" : 
+                link.highlight ? "text-white border-b border-white/30 pb-1" : "text-white/70"
               }`}
             >
               {link.label}
@@ -61,13 +65,8 @@ export default function Navigation() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button
-            onClick={handleSignUp}
-            className="bg-transparent border border-[#FFB800] text-[#FFB800] hover:bg-[#FFB800] hover:text-black font-display font-bold text-xs tracking-widest rounded-none px-6"
-          >
-            SIGN UP
-          </Button>
+        <div className="hidden md:flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
         </div>
 
         <button
