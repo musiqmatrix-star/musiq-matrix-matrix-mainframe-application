@@ -50,13 +50,14 @@ export default function Navigation() {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className={`font-mono text-xs tracking-[0.2em] transition-colors hover:text-[#FFB800] ${
-                pathname === link.href ? "text-[#FFB800]" : "text-white/70"
+              className={`font-mono text-xs tracking-[0.15em] transition-colors hover:text-[#FFB800] ${
+                pathname === link.href ? "text-[#FFB800]" : 
+                link.highlight ? "text-white border-b border-white/30 pb-1" : "text-white/70"
               }`}
             >
               {link.label}
