@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const navLinks = [
-  { label: "HOME", href: "/" },
-  { label: "ABOUT", href: "/about" },
-  { label: "FEATURES", href: "/#features" },
-  { label: "COMMUNITY", href: "#community" },
+  { label: "MUSIC CATALOG", href: "#music-catalog" },
+  { label: "VISUAL MEDIA", href: "#visual-media" },
+  { label: "MATRX MERCH", href: "/matrx-merch", highlight: true },
+  { label: "MAINFRAME OS", href: "#mainframe" },
+  { label: "GENESIS", href: "#genesis" },
+  { label: "ELEMENTAL PROTOCOL", href: "#elemental-protocol" },
+  { label: "LOGIN", href: "#login" },
 ];
 
 export default function Navigation() {
