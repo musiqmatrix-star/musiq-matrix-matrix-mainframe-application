@@ -65,13 +65,8 @@ export default function Navigation() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button
-            onClick={handleSignUp}
-            className="bg-transparent border border-[#FFB800] text-[#FFB800] hover:bg-[#FFB800] hover:text-black font-display font-bold text-xs tracking-widest rounded-none px-6"
-          >
-            SIGN UP
-          </Button>
+        <div className="hidden md:flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
         </div>
 
         <button
