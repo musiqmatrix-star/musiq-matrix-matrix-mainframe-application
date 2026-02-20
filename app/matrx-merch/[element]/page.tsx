@@ -199,10 +199,9 @@ export default function ElementPage() {
                 transition={{ duration: 0.8 }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <IconComponent 
-                    className="w-12 h-12"
-                    style={{ color: element.color }}
-                  />
+                  <div style={{ color: element.color }}>
+                    <IconComponent className="w-12 h-12" />
+                  </div>
                   <span 
                     className="font-mono text-sm tracking-[0.3em] uppercase"
                     style={{ color: element.color }}
